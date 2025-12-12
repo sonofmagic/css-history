@@ -1,0 +1,12 @@
+{
+  "name": "@css-history/preflight",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    ".": "./src/preflight.css"
+  },
+  "main": "./src/preflight.css",
+  "files": ["src"]
+}
