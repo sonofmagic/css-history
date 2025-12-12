@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
+    "tsBuildInfoFile": "./node_modules/.cache/tsbuildinfo.raw-css-bem.node",
     "types": ["node"],
     "noEmit": true,
     "skipLibCheck": true
