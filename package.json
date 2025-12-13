@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
+    "dev": "node scripts/dev-all.js",
+    "dev:turbo": "turbo run dev --parallel",
     "test": "vitest run",
     "test:dev": "vitest",
     "lint": "turbo run lint",
