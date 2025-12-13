@@ -1,0 +1,223 @@
+/* stylelint-disable selector-class-pattern */
+
+/* 极小型 utility-first 片段，模拟 Tailwind/Uno 的可组合性 */
+:root {
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-100: #e2e8f0;
+  --white: #fff;
+  --brand: #2563eb;
+  --brand-2: #38bdf8;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.px-4 {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.rounded-lg {
+  border-radius: 0.75rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.shadow-lg {
+  box-shadow: 0 18px 40px rgb(15 23 42 / 18%);
+}
+
+.shadow-md {
+  box-shadow: 0 12px 30px rgb(15 23 42 / 14%);
+}
+
+.bg-slate-900 {
+  background-color: var(--slate-900);
+}
+
+.bg-slate-800 {
+  background-color: var(--slate-800);
+}
+
+.bg-slate-100 {
+  background-color: var(--slate-100);
+}
+
+.bg-white {
+  background-color: var(--white);
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-slate-100 {
+  color: var(--slate-100);
+}
+
+.text-slate-700 {
+  color: var(--slate-700);
+}
+
+.text-slate-900 {
+  color: var(--slate-900);
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.tracking-wide {
+  letter-spacing: 0.08em;
+}
+
+.border {
+  border-color: #e2e8f0;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.border-slate-800 {
+  border-color: var(--slate-800);
+}
+
+.border-dashed {
+  border-style: dashed;
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.5rem;
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem;
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.hover\:translate-y-[-2px]:hover {
+  transform: translateY(-2px);
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 20px 48px rgb(37 99 235 / 25%);
+}
+
+.transition {
+  transition: all 150ms ease;
+}
+
+.badge {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  background: rgb(255 255 255 / 8%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 999px;
+}

@@ -1,5 +1,6 @@
 packages:
-  - apps/*
+  - apps/react/*
+  - apps/vue/*
   - packages/*
   - '!**/test/**'
 onlyBuiltDependencies:

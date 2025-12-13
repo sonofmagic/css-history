@@ -1,0 +1,43 @@
+@import '@css-history/preflight';
+
+:root {
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.page {
+  display: grid;
+  gap: 18px;
+  max-width: 980px;
+  padding: 42px 20px 64px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+p {
+  margin: 0;
+}
+
+.hero {
+  display: grid;
+  gap: 6px;
+}
+
+.hero-desc {
+  color: #475569;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+@media (width >= 920px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

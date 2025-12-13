@@ -1,0 +1,120 @@
+/* stylelint-disable selector-class-pattern */
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  color: var(--text, #0f172a);
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: var(--radius, 16px);
+  box-shadow: 0 14px 32px rgb(15 23 42 / 8%);
+}
+
+.panel--muted {
+  background: var(--surface-subtle, #f1f5f9);
+}
+
+.panel__header {
+  display: grid;
+  gap: 4px;
+}
+
+.panel__title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.panel__desc {
+  margin: 0;
+  color: color-mix(in srgb, var(--text, #0f172a) 70%, transparent);
+}
+
+.pill {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--accent, #0ea5e9);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--accent-muted, rgb(14 165 233 / 14%));
+  border: 1px solid color-mix(in srgb, var(--accent, #0ea5e9) 50%, transparent);
+  border-radius: 999px;
+}
+
+.pill--ghost {
+  background: color-mix(in srgb, var(--accent, #0ea5e9) 10%, transparent);
+}
+
+.theme-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.theme-picker {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 12px;
+  cursor: pointer;
+  background: var(--surface-subtle, #f1f5f9);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 12px;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--accent-muted, rgb(14 165 233 / 12%));
+  border-color: var(--accent, #0ea5e9);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.list {
+  display: grid;
+  gap: 6px;
+  padding-left: 18px;
+  margin: 0;
+  color: color-mix(in srgb, var(--text, #0f172a) 84%, transparent);
+}
+
+.muted {
+  color: color-mix(in srgb, var(--text, #0f172a) 60%, transparent);
+}
+
+.theme-row .muted {
+  font-weight: 500;
+}
+
+.pill + .panel__title {
+  margin-top: 4px;
+}
+
+.box {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px dashed var(--border);
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.box--warn {
+  background: var(--surface-subtle, #f1f5f9);
+}
