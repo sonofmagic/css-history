@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import { computed } from 'vue'
 
 const button = cva('btn', {
   variants: {
@@ -19,13 +20,17 @@ const button = cva('btn', {
   },
 })
 
-type Props = VariantProps<typeof button>
+interface Props {
+  tone?: 'accent' | 'ghost' | 'outline'
+  density?: 'comfy' | 'compact'
+}
 
-defineProps<Props>()
+const props = defineProps<Props>()
+const buttonClass = computed(() => button(props))
 </script>
 
 <template>
-  <button :class="button($props)" type="button">
+  <button :class="buttonClass" type="button">
     <slot />
   </button>
 </template>

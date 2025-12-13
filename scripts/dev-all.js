@@ -1,26 +1,53 @@
 import { Buffer } from 'node:buffer'
 import { spawn } from 'node:child_process'
+import fs from 'node:fs'
 import net from 'node:net'
+import path from 'node:path'
 import process from 'node:process'
 
-const apps = [
-  { label: 'vue/css-in-js', filter: 'css-in-js-vue', path: 'apps/vue/css-in-js', port: 4301 },
-  { label: 'vue/css-modules', filter: 'css-modules-demo', path: 'apps/vue/css-modules', port: 4302 },
-  { label: 'vue/headless-tokens', filter: 'headless-tokens', path: 'apps/vue/headless-tokens', port: 4303 },
-  { label: 'vue/preprocessors-sass', filter: 'preprocessors-sass', path: 'apps/vue/preprocessors-sass', port: 4304 },
-  { label: 'vue/raw-css-bem', filter: 'raw-css-bem', path: 'apps/vue/raw-css-bem', port: 4305 },
-  { label: 'vue/utility-first', filter: 'utility-first-vue', path: 'apps/vue/utility-first', port: 4306 },
-  { label: 'react/css-in-js', filter: 'css-in-js-react', path: 'apps/react/css-in-js', port: 4401 },
-  { label: 'react/css-modules', filter: 'css-modules-react', path: 'apps/react/css-modules', port: 4402 },
-  { label: 'react/headless-tokens', filter: 'headless-tokens-react', path: 'apps/react/headless-tokens', port: 4403 },
-  { label: 'react/preprocessors-sass', filter: 'preprocessors-sass-react', path: 'apps/react/preprocessors-sass', port: 4404 },
-  { label: 'react/raw-css-bem', filter: 'raw-css-bem-react', path: 'apps/react/raw-css-bem', port: 4405 },
-  { label: 'react/utility-first', filter: 'utility-first-react', path: 'apps/react/utility-first', port: 4406 },
+const stacks = [
+  { name: 'vue', root: 'apps/vue', basePort: 4301, color: 36 },
+  { name: 'react', root: 'apps/react', basePort: 4401, color: 35 },
 ]
 
 const children = new Map()
+const useColor = process.stdout.isTTY && !process.env.NO_COLOR
 
-function log(label, chunk, stream = 'stdout') {
+function color(text, code) {
+  return useColor ? `\u001B[${code}m${text}\u001B[0m` : text
+}
+
+function readJson(file) {
+  return JSON.parse(fs.readFileSync(file, 'utf8'))
+}
+
+function discoverApps() {
+  const apps = []
+
+  for (const stack of stacks) {
+    let nextPort = stack.basePort
+    const entries = fs.readdirSync(stack.root, { withFileTypes: true }).filter(entry => entry.isDirectory())
+
+    for (const entry of entries) {
+      const pkgPath = path.join(stack.root, entry.name, 'package.json')
+      const pkg = readJson(pkgPath)
+      const portMatch = pkg.scripts?.dev?.match(/--port\s+(\d+)/)
+      const port = portMatch ? Number.parseInt(portMatch[1], 10) : nextPort++
+
+      apps.push({
+        label: `${stack.name}/${entry.name}`,
+        filter: pkg.name,
+        path: `${stack.root}/${entry.name}`,
+        port,
+        color: stack.color,
+      })
+    }
+  }
+
+  return apps
+}
+
+function log(label, chunk, stream = 'stdout', code = null) {
   const text = chunk instanceof Buffer ? chunk.toString() : String(chunk)
   const lines = text.split('\n')
 
@@ -28,7 +55,8 @@ function log(label, chunk, stream = 'stdout') {
     if (line.trim() === '') {
       continue
     }
-    const output = `[${label}] ${line}\n`
+    const prefix = color(`[${label}]`, code ?? 90)
+    const output = `${prefix} ${line}\n`
     if (stream === 'stderr') {
       process.stderr.write(output)
     }
@@ -71,12 +99,12 @@ function startApp(app) {
 
     children.set(app.label, child)
 
-    child.stdout?.on('data', data => log(app.label, data))
-    child.stderr?.on('data', data => log(app.label, data, 'stderr'))
+    child.stdout?.on('data', data => log(app.label, data, 'stdout', app.color))
+    child.stderr?.on('data', data => log(app.label, data, 'stderr', 31))
 
     child.on('exit', (code) => {
       if (code !== null && code !== 0) {
-        log(app.label, `退出，状态码 ${code}`)
+        log(app.label, `退出，状态码 ${code}`, 'stderr', 31)
       }
       children.delete(app.label)
     })
@@ -97,8 +125,10 @@ function stopAll() {
   }
 }
 
-function printSummary() {
-  const summary = apps.map(app => `- ${app.label} (${app.path}) -> http://localhost:${app.port}`).join('\n')
+function printSummary(apps) {
+  const summary = apps
+    .map(app => `${color(`- ${app.label}`, app.color)} (${app.path}) -> http://localhost:${app.port}`)
+    .join('\n')
 
   process.stdout.write('\n所有 dev server 已就绪：\n')
   process.stdout.write(`${summary}\n`)
@@ -106,17 +136,19 @@ function printSummary() {
 }
 
 async function run() {
+  const apps = discoverApps()
+
   process.stdout.write('启动 Vue/React 示例（带端口绑定与 --host）...\n')
 
   try {
     const ready = await Promise.all(apps.map(app => startApp(app)))
     const readyLabels = ready.map(item => item.label).join(', ')
-    process.stdout.write(`已检测到端口就绪：${readyLabels}\n`)
-    printSummary()
+    process.stdout.write(`${color('已检测到端口就绪', 32)}：${readyLabels}\n`)
+    printSummary(apps)
   }
   catch (err) {
     const message = err?.message || String(err)
-    log('dev', `启动失败：${message}`, 'stderr')
+    log('dev', `启动失败：${message}`, 'stderr', 31)
     stopAll()
     process.exit(1)
   }
