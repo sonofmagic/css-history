@@ -1,5 +1,9 @@
 import { css, cx } from '@emotion/css'
 import { useMemo, useState } from 'react'
+import { StyledComponentsCard } from './components/StyledComponentsCard'
+import StyledJsxCard from './components/StyledJsxCard'
+import { StylexCard } from './components/StylexCard'
+import { VanillaExtractCard } from './components/VanillaExtractCard'
 
 const themes = {
   dark: {
@@ -107,46 +111,58 @@ function App() {
         </p>
       </header>
 
-      <section className={cardClass}>
-        <div className={pill} style={{ color: '#7dd3fc', background: 'rgb(14 165 233 / 16%)', border: '1px solid rgb(125 211 252 / 32%)' }}>
-          <span className="icon">⚡️</span>
-          动态主题
-        </div>
-        <h2 style={{ margin: '4px 0 0' }}>用 props/状态驱动样式</h2>
-        <p style={{ color: '#cbd5e1' }}>按钮、卡片、阴影都由响应式状态生成，组件边界即作用域。</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
-          <button className={btnClass} type="button" onClick={() => setMode(prev => (prev === 'dark' ? 'light' : 'dark'))}>
-            切换为
+      <div style={{ display: 'grid', gap: '14px' }}>
+        <section className={cardClass}>
+          <div className={pill} style={{ color: '#7dd3fc', background: 'rgb(14 165 233 / 16%)', border: '1px solid rgb(125 211 252 / 32%)' }}>
+            <span className="icon">⚡️</span>
+            动态主题（Emotion）
+          </div>
+          <h2 style={{ margin: '4px 0 0' }}>用 props/状态驱动样式</h2>
+          <p style={{ color: '#cbd5e1' }}>按钮、卡片、阴影都由响应式状态生成，组件边界即作用域。</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
+            <button className={btnClass} type="button" onClick={() => setMode(prev => (prev === 'dark' ? 'light' : 'dark'))}>
+              切换为
+              {' '}
+              {mode === 'dark' ? '亮色' : '暗色'}
+            </button>
+            <label style={{ display: 'inline-flex', gap: '6px', alignItems: 'center' }}>
+              <input checked={animatedBorder} type="checkbox" onChange={event => setAnimatedBorder(event.target.checked)} />
+              props 决定边框/阴影
+            </label>
+          </div>
+          <p className={runtimeNote}>
+            当前主题：
+            {modeLabel}
+            ；生成的 class 长度 ~
+            {classSize}
             {' '}
-            {mode === 'dark' ? '亮色' : '暗色'}
-          </button>
-          <label style={{ display: 'inline-flex', gap: '6px', alignItems: 'center' }}>
-            <input checked={animatedBorder} type="checkbox" onChange={event => setAnimatedBorder(event.target.checked)} />
-            props 决定边框/阴影
-          </label>
-        </div>
-        <p className={runtimeNote}>
-          当前主题：
-          {modeLabel}
-          ；生成的 class 长度 ~
-          {classSize}
-          {' '}
-          字符（首屏需注入同等长度的 style）。
-        </p>
-      </section>
+            字符（首屏需注入同等长度的 style）。
+          </p>
+        </section>
 
-      <section className={cx(cardClass, warning)}>
-        <div className={pill} style={{ color: '#fecdd3', background: 'rgb(248 113 113 / 14%)', border: '1px solid rgb(248 113 113 / 40%)' }}>
-          <span className="icon">⚠️</span>
-          运行时成本
-        </div>
-        <h2 style={{ margin: '4px 0 0' }}>首屏注水 &amp; 可读性</h2>
-        <ul style={{ display: 'grid', gap: '4px', margin: '6px 0 0 18px', color: '#fecdd3' }}>
-          <li>SSR 要把生成的样式注入 HTML，60KB 很常见。</li>
-          <li>类名是哈希，排查覆盖链需要 devtools/标记。</li>
-          <li>热更新有时需要 emotion cache，性能与缓存要监控。</li>
-        </ul>
-      </section>
+        <section className={cx(cardClass, warning)}>
+          <div className={pill} style={{ color: '#fecdd3', background: 'rgb(248 113 113 / 14%)', border: '1px solid rgb(248 113 113 / 40%)' }}>
+            <span className="icon">⚠️</span>
+            运行时成本
+          </div>
+          <h2 style={{ margin: '4px 0 0' }}>首屏注水 &amp; 可读性</h2>
+          <ul style={{ display: 'grid', gap: '4px', margin: '6px 0 0 18px', color: '#fecdd3' }}>
+            <li>SSR 要把生成的样式注入 HTML，60KB 很常见。</li>
+            <li>类名是哈希，排查覆盖链需要 devtools/标记。</li>
+            <li>热更新有时需要 emotion cache，性能与缓存要监控。</li>
+          </ul>
+        </section>
+
+        <section style={{ display: 'grid', gap: '10px' }}>
+          <h2 style={{ margin: '0 0 4px' }}>更多 CSS-in-JS 侧重点</h2>
+          <div style={{ display: 'grid', gap: '10px' }}>
+            <StyledComponentsCard />
+            <StyledJsxCard />
+            <StylexCard />
+            <VanillaExtractCard />
+          </div>
+        </section>
+      </div>
     </main>
   )
 }

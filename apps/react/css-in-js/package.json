@@ -11,12 +11,18 @@
   "dependencies": {
     "@css-history/preflight": "workspace:*",
     "@emotion/css": "catalog:default",
+    "@stylexjs/stylex": "catalog:default",
+    "@vanilla-extract/css": "catalog:default",
     "react": "catalog:default",
-    "react-dom": "catalog:default"
+    "react-dom": "catalog:default",
+    "styled-components": "catalog:default",
+    "styled-jsx": "catalog:default"
   },
   "devDependencies": {
+    "@stylexjs/babel-plugin": "catalog:default",
     "@types/react": "catalog:default",
     "@types/react-dom": "catalog:default",
+    "@vanilla-extract/vite-plugin": "catalog:default",
     "@vitejs/plugin-react": "catalog:default",
     "typescript": "catalog:default",
     "vite": "catalog:default"
