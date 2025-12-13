@@ -22,6 +22,7 @@
     "@stylexjs/babel-plugin": "catalog:default",
     "@types/react": "catalog:default",
     "@types/react-dom": "catalog:default",
+    "@types/styled-components": "^5.1.36",
     "@vanilla-extract/vite-plugin": "catalog:default",
     "@vitejs/plugin-react": "catalog:default",
     "typescript": "catalog:default",
