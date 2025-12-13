@@ -1,5 +1,6 @@
 @use './tokens' as *;
-@import '@css-history/preflight';
+@use './mixins' as *;
+@use '@css-history/preflight' as preflight;
 
 :root {
   color: #e2e8f0;

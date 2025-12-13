@@ -52,6 +52,7 @@
 
 <style lang="scss">
 /* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use 'sass:color';
 @use './styles/tokens' as *;
 @use './styles/mixins' as *;
 
@@ -144,12 +145,12 @@ h2 {
   border-radius: $radius-md;
 
   &.success {
-    color: lighten($color-success, 18%);
+    color: color.adjust($color-success, $lightness: 18%);
     background: rgba($color-success, 0.1);
   }
 
   &.danger {
-    color: lighten($color-danger, 20%);
+    color: color.adjust($color-danger, $lightness: 20%);
     background: rgba($color-danger, 0.08);
   }
 }

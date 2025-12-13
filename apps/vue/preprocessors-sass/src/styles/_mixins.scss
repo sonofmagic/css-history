@@ -1,8 +1,14 @@
 @use './tokens' as *;
 
 @mixin surface($tone: 'default') {
+  $background: $color-surface;
+
+  @if $tone == 'muted' {
+    $background: $color-surface-subtle;
+  }
+
   color: #f8fafc;
-  background: if($tone == 'muted', $color-surface-subtle, $color-surface);
+  background: $background;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
   box-shadow: $shadow-card;
