@@ -2,6 +2,7 @@ import { Buffer } from 'node:buffer'
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import net from 'node:net'
+import os from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
 
@@ -19,6 +20,39 @@ function color(text, code) {
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'))
+}
+
+function logHostLines(label, chunk, code = null) {
+  const text = chunk instanceof Buffer ? chunk.toString() : String(chunk)
+  const lines = text.split('\n')
+  const hasUrl = /https?:\/\//i
+  const skipLocal = /localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0/i
+
+  for (const line of lines) {
+    if (!hasUrl.test(line)) {
+      continue
+    }
+    if (skipLocal.test(line)) {
+      continue
+    }
+    const prefix = color(`[${label}]`, code ?? 90)
+    process.stdout.write(`${prefix} ${line.trim()}\n`)
+  }
+}
+
+function getRemoteHost() {
+  const interfaces = os.networkInterfaces()
+  for (const infos of Object.values(interfaces)) {
+    if (!infos) {
+      continue
+    }
+    for (const info of infos) {
+      if (info.family === 'IPv4' && info.address && !info.internal) {
+        return info.address
+      }
+    }
+  }
+  return null
 }
 
 function discoverApps() {
@@ -99,7 +133,7 @@ function startApp(app) {
 
     children.set(app.label, child)
 
-    child.stdout?.on('data', data => log(app.label, data, 'stdout', app.color))
+    child.stdout?.on('data', data => logHostLines(app.label, data, app.color))
     child.stderr?.on('data', data => log(app.label, data, 'stderr', 31))
 
     child.on('exit', (code) => {
@@ -126,8 +160,13 @@ function stopAll() {
 }
 
 function printSummary(apps) {
+  const remoteHost = getRemoteHost()
+
   const summary = apps
-    .map(app => `${color(`- ${app.label}`, app.color)} (${app.path}) -> http://localhost:${app.port}`)
+    .map((app) => {
+      const target = remoteHost ? `http://${remoteHost}:${app.port}` : '未检测到可用远程地址'
+      return `${color(`- ${app.label}`, app.color)} (${app.path}) -> ${target}`
+    })
     .join('\n')
 
   process.stdout.write('\n所有 dev server 已就绪：\n')

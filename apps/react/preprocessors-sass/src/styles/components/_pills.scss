@@ -5,30 +5,31 @@
 .pill {
   @include text-pill($color-muted);
 
-  color: #e2e8f0;
-  background: rgba($color-muted, 0.1);
-  border: 1px solid $color-border;
+  color: #0b1224;
+  background: rgba($color-muted, 0.18);
+  border: 1px solid rgba($color-muted, 0.35);
 }
 
 .pill--brand {
   @include text-pill($color-brand);
 
-  color: #f8fafc;
-  background: rgba($color-brand, 0.24);
-  border-color: rgba($color-brand, 0.6);
+  color: #0b1224;
+  background: rgba($color-brand, 0.26);
+  border-color: rgba($color-brand, 0.66);
 }
 
 .pill--danger {
   @include text-pill($color-danger);
 
-  color: #fee2e2;
-  border-color: rgba($color-danger, 0.6);
+  color: #0b1224;
+  background: rgba($color-danger, 0.22);
+  border-color: rgba($color-danger, 0.66);
 }
 
 .pill--ghost {
   @include text-pill($color-muted);
 
-  color: #cbd5e1;
-  background: transparent;
-  border-color: $color-border;
+  color: #e2e8f0;
+  background: rgba($color-muted, 0.08);
+  border-color: rgba(255 255 255 / 18%);
 }

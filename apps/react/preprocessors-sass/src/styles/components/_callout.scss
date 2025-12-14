@@ -3,18 +3,18 @@
 
 .callout {
   padding: 12px;
-  border: 1px solid $color-border;
+  border: 1px solid rgba(255 255 255 / 22%);
   border-radius: $radius-md;
 }
 
 .callout.success {
-  color: #22c55e;
-  background: rgba($color-success, 0.1);
-  border-color: rgba($color-success, 0.5);
+  color: #0b1724;
+  background: rgba($color-success, 0.22);
+  border-color: rgba($color-success, 0.7);
 }
 
 .callout.danger {
-  color: #fca5a5;
-  background: rgba($color-danger, 0.08);
-  border-color: rgba($color-danger, 0.5);
+  color: #0b1724;
+  background: rgba($color-danger, 0.22);
+  border-color: rgba($color-danger, 0.7);
 }

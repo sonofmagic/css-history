@@ -3,7 +3,7 @@
 @use '../mixins' as *;
 
 .btn {
-  @include button-variant($color-surface-subtle, #e2e8f0, $color-border, 0 12px 30px rgb(0 0 0 / 18%));
+  @include button-variant($color-surface-subtle, #f8fafc, rgba(255 255 255 / 20%), 0 12px 30px rgb(0 0 0 / 18%));
 }
 
 .btn--primary {
@@ -14,14 +14,14 @@
 }
 
 .btn--subtle {
-  color: #e2e8f0;
+  color: #f8fafc;
   background: $color-surface-contrast;
-  border-color: $color-border;
+  border-color: rgba(255 255 255 / 20%);
 }
 
 .btn--ghost {
-  color: $color-muted;
+  color: #e2e8f0;
   background: transparent;
-  border-color: $color-border;
+  border-color: rgba(255 255 255 / 18%);
   box-shadow: none;
 }

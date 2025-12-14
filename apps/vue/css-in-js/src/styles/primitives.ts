@@ -24,7 +24,7 @@ export function makePill(mode: ThemeKey) {
     align-items: center;
     padding: 4px 10px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     border: 1px solid ${palette.borderSoft};
@@ -54,8 +54,8 @@ export function makePillGhost(mode: ThemeKey) {
 export function makeRuntimeNote(mode: ThemeKey) {
   const palette = getPalette(mode)
   return css`
-    font-size: 12px;
-    color: ${palette.muted};
+    font-size: 13px;
+    color: ${palette.subtle};
     margin-top: 8px;
     word-break: break-all;
   `
@@ -107,7 +107,7 @@ export function makeMetricLabel(mode: ThemeKey) {
   return css`
     display: grid;
     gap: 2px;
-    font-size: 14px;
+    font-size: 15px;
     color: ${palette.subtle};
   `
 }
@@ -138,7 +138,7 @@ export function makeCodeBox(mode: ThemeKey) {
     font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
       monospace;
     font-size: 13px;
-    color: #e5e7eb;
+    color: #f8fafc;
     background: ${palette.codeBg};
     border-radius: 10px;
     border: 1px solid ${palette.borderSoft};

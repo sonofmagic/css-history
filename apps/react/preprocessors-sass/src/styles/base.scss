@@ -3,14 +3,14 @@
 @use '@css-history/preflight' as preflight;
 
 :root {
-  color: #e2e8f0;
+  color: #e8edf5;
 }
 
 body {
   min-height: 100vh;
   font-family: $font-stack;
-  color: #e2e8f0;
-  background: radial-gradient(circle at 20% 20%, rgb(124 58 237 / 22%), transparent 32%), #0b1224;
+  color: #e8edf5;
+  background: radial-gradient(circle at 20% 20%, rgb(124 58 237 / 22%), transparent 32%), #0a1120;
 }
 
 a {
@@ -38,8 +38,8 @@ h1 {
 }
 
 .eyebrow {
-  font-size: 12px;
-  color: $color-muted;
+  font-size: 13px;
+  color: #e8edf5;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
