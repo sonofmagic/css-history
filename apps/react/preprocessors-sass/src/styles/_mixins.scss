@@ -3,7 +3,13 @@
 
 @mixin surface($tone: 'default') {
   color: #f8fafc;
-  background: if($tone == 'muted', $color-surface-subtle, $color-surface);
+
+  @if $tone == 'muted' {
+    background: $color-surface-subtle;
+  } @else {
+    background: $color-surface;
+  }
+
   border: 1px solid $color-border;
   border-radius: $radius-lg;
   box-shadow: $shadow-card;
