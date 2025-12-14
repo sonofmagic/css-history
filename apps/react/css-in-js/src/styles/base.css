@@ -1,8 +1,10 @@
 @import '@css-history/preflight';
 
 :root {
-  color: #e2e8f0;
-  background: #0b1224;
+  --page-bg: #0b1224;
+  --page-text: #e2e8f0;
+  color: var(--page-text);
+  background: var(--page-bg);
 }
 
 .page {

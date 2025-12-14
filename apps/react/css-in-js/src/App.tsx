@@ -1,40 +1,53 @@
 import type { ThemeKey } from './styles/theme'
 import { cx } from '@emotion/css'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { StyledComponentsCard } from './components/StyledComponentsCard'
 import StyledJsxCard from './components/StyledJsxCard'
 import { StylexCard } from './components/StylexCard'
 import { VanillaExtractCard } from './components/VanillaExtractCard'
 import {
-  codeBox,
   featureGrid,
   gridTwo,
-  heroShell,
   makeButtonClass,
   makeCardClass,
+  makeCodeBox,
+  makeHeroShell,
+  makeMetricLabel,
+  makeMetricRow,
+  makeMetricValue,
+  makeNote,
+  makePill,
+  makePillAccent,
+  makePillGhost,
+  makeRuntimeNote,
+  makeTag,
+  makeWarningBox,
   metaRow,
-  metricLabel,
-  metricRow,
-  metricValue,
-  note,
-  pill,
-  pillAccent,
-  pillGhost,
   ribbon,
-  runtimeNote,
   sectionHeading,
-  tag,
-  warningBox,
 } from './styles/primitives'
-import { palette, themes } from './styles/theme'
+import { getPalette, themes } from './styles/theme'
 
 function App() {
   const [mode, setMode] = useState<ThemeKey>('dark')
   const [animatedBorder, setAnimatedBorder] = useState(true)
   const [hydrationSize, setHydrationSize] = useState(62)
 
+  const palette = useMemo(() => getPalette(mode), [mode])
   const cardClass = useMemo(() => makeCardClass(mode), [mode])
   const btnClass = useMemo(() => makeButtonClass(mode, animatedBorder), [animatedBorder, mode])
+  const heroShell = useMemo(() => makeHeroShell(mode), [mode])
+  const pill = useMemo(() => makePill(mode), [mode])
+  const pillAccent = useMemo(() => makePillAccent(mode), [mode])
+  const pillGhost = useMemo(() => makePillGhost(mode), [mode])
+  const runtimeNote = useMemo(() => makeRuntimeNote(mode), [mode])
+  const warningBox = useMemo(() => makeWarningBox(mode), [mode])
+  const metricRow = useMemo(() => makeMetricRow(mode), [mode])
+  const metricLabel = useMemo(() => makeMetricLabel(mode), [mode])
+  const metricValue = useMemo(() => makeMetricValue(mode), [mode])
+  const note = useMemo(() => makeNote(mode), [mode])
+  const codeBox = useMemo(() => makeCodeBox(mode), [mode])
+  const tag = useMemo(() => makeTag(mode), [mode])
 
   const modeLabel = mode === 'dark' ? '暗色运行时主题' : '亮色运行时主题'
   const classSize = useMemo(() => btnClass.length + cardClass.length, [btnClass, cardClass])
@@ -53,6 +66,12 @@ function App() {
     { label: 'Tree Shaking', value: '依赖 babel 插件（@emotion/babel-plugin）' },
     { label: '缓存策略', value: 'Emotion cache key 需与 SSR 对齐' },
   ]
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.style.setProperty('--page-bg', palette.page)
+    root.style.setProperty('--page-text', palette.pageText)
+  }, [palette.page, palette.pageText])
 
   return (
     <main className="page">

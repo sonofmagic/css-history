@@ -1,15 +1,16 @@
 import * as stylex from '@stylexjs/stylex'
-import { palette } from '../styles/theme'
 
 const styles = stylex.create({
   card: {
     display: 'grid',
     gap: 10,
     padding: 16,
-    color: palette.ink,
+    color: '#0f172a',
     backgroundColor: '#f8fafc',
     borderRadius: 14,
-    border: '1px solid #e2e8f0',
+    borderColor: '#e2e8f0',
+    borderStyle: 'solid',
+    borderWidth: 1,
     boxShadow: '0 12px 28px rgb(15 23 42 / 8%)',
   },
   pill: {
@@ -24,7 +25,9 @@ const styles = stylex.create({
     textTransform: 'uppercase',
     color: '#0ea5e9',
     backgroundColor: 'rgb(14 165 233 / 12%)',
-    border: '1px solid rgb(14 165 233 / 40%)',
+    borderColor: 'rgb(14 165 233 / 40%)',
+    borderStyle: 'solid',
+    borderWidth: 1,
     borderRadius: 999,
   },
   title: {
@@ -43,7 +46,9 @@ const styles = stylex.create({
     paddingInline: 12,
     fontWeight: 600,
     borderRadius: 12,
-    border: '1px solid transparent',
+    borderColor: 'transparent',
+    borderStyle: 'solid',
+    borderWidth: 1,
     color: '#fff',
     backgroundColor: '#0ea5e9',
     boxShadow: '0 10px 24px rgb(14 165 233 / 26%)',
@@ -52,7 +57,9 @@ const styles = stylex.create({
   ghost: {
     color: '#0f172a',
     backgroundColor: 'transparent',
-    border: '1px solid #cbd5e1',
+    borderColor: '#cbd5e1',
+    borderStyle: 'solid',
+    borderWidth: 1,
     boxShadow: 'none',
   },
   row: {
@@ -68,7 +75,9 @@ const styles = stylex.create({
     color: '#475569',
     backgroundColor: '#f1f5f9',
     borderRadius: 10,
-    border: '1px dashed #cbd5e1',
+    borderColor: '#cbd5e1',
+    borderStyle: 'dashed',
+    borderWidth: 1,
   },
 })
 

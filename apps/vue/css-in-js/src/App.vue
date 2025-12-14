@@ -1,38 +1,58 @@
 <script setup lang="ts">
 import { cx } from '@emotion/css'
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import {
-  codeBox,
   featureGrid,
   gridTwo,
-  heroShell,
   makeButtonClass,
   makeCardClass,
+  makeCodeBox,
+  makeHeroShell,
+  makeMetricLabel,
+  makeMetricRow,
+  makeMetricValue,
+  makeNote,
+  makePill,
+  makePillAccent,
+  makePillGhost,
+  makeRuntimeNote,
+  makeTag,
+  makeWarningBox,
   metaRow,
-  metricLabel,
-  metricRow,
-  metricValue,
-  note,
-  pill,
-  pillAccent,
-  pillGhost,
   ribbon,
-  runtimeNote,
   sectionHeading,
-  tag,
-  warningBox,
 } from './styles/primitives'
-import { type ThemeKey, palette, themes } from './styles/theme'
+import { getPalette, type ThemeKey, themes } from './styles/theme'
 
 const mode = ref<ThemeKey>('dark')
 const animatedBorder = ref(true)
 const hydrationSize = ref(62)
 
+const palette = computed(() => getPalette(mode.value))
 const cardClass = computed(() => makeCardClass(mode.value))
 const btn = computed(() => makeButtonClass(mode.value, animatedBorder.value))
+const heroShell = computed(() => makeHeroShell(mode.value))
+const pill = computed(() => makePill(mode.value))
+const pillAccent = computed(() => makePillAccent(mode.value))
+const pillGhost = computed(() => makePillGhost(mode.value))
+const runtimeNote = computed(() => makeRuntimeNote(mode.value))
+const warningBox = computed(() => makeWarningBox(mode.value))
+const metricRow = computed(() => makeMetricRow(mode.value))
+const metricLabel = computed(() => makeMetricLabel(mode.value))
+const metricValue = computed(() => makeMetricValue(mode.value))
+const note = computed(() => makeNote(mode.value))
+const codeBox = computed(() => makeCodeBox(mode.value))
+const tag = computed(() => makeTag(mode.value))
 
 const modeLabel = computed(() => (mode.value === 'dark' ? '暗色运行时主题' : '亮色运行时主题'))
 const classSize = computed(() => btn.value.length + cardClass.value.length)
+
+watchEffect(() => {
+  const tone = palette.value
+  const root = document.documentElement
+  root.style.setProperty('--page-bg', tone.page)
+  root.style.setProperty('--page-text', tone.pageText)
+})
 
 const runtimeCosts = computed(() => [
   { label: 'SSR 注水', value: `${hydrationSize.value}KB`, desc: 'emotion cache + 已生成样式必须附带到 HTML' },
