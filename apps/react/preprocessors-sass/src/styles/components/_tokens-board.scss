@@ -1,0 +1,42 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.token-chip {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  background: $color-surface-subtle;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 16%);
+}
+
+.token-chip__name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.token-chip__desc {
+  margin: 0;
+  color: $color-muted;
+}
+
+.token-chip--brand {
+  background: rgba($color-brand, 0.12);
+  border-color: rgba($color-brand, 0.5);
+}
+
+.token-chip--muted {
+  background: rgba($color-muted, 0.1);
+}
+
+.token-chip--danger {
+  background: rgba($color-danger, 0.12);
+  border-color: rgba($color-danger, 0.4);
+}

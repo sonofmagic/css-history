@@ -1,0 +1,34 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.pill {
+  @include text-pill($color-muted);
+
+  color: #e2e8f0;
+  background: rgba($color-muted, 0.1);
+  border: 1px solid $color-border;
+}
+
+.pill--brand {
+  @include text-pill($color-brand);
+
+  color: #f8fafc;
+  background: rgba($color-brand, 0.24);
+  border-color: rgba($color-brand, 0.6);
+}
+
+.pill--danger {
+  @include text-pill($color-danger);
+
+  color: #fee2e2;
+  border-color: rgba($color-danger, 0.6);
+}
+
+.pill--ghost {
+  @include text-pill($color-muted);
+
+  color: #cbd5e1;
+  background: transparent;
+  border-color: $color-border;
+}

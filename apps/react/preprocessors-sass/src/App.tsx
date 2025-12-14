@@ -2,11 +2,23 @@ function App() {
   return (
     <main className="page">
       <section className="hero">
-        <p className="eyebrow">2013 · 预处理器 (Sass/Less/PostCSS)</p>
+        <div className="hero__meta">
+          <span className="pill pill--brand">2013 · 预处理器 (Sass/Less/PostCSS)</span>
+          <span className="pill pill--ghost">变量 / 混入 / 函数</span>
+          <span className="pill pill--ghost">依旧是全局作用域</span>
+        </div>
         <h1>变量、混入、函数把样式脚本化</h1>
-        <p className="hero-desc">
+        <p className="hero__desc">
           Sass 让 BEM 时代的全局样式有了变量与复用能力，但作用域依旧是全局：能带来统一色板，也容易走向“嵌套地狱”。
         </p>
+        <div className="hero__actions">
+          <button className="btn btn--primary" type="button">
+            一处改色，处处生效
+          </button>
+          <button className="btn btn--ghost" type="button">
+            嵌套选择器仍在泄漏
+          </button>
+        </div>
       </section>
 
       <section className="grid">
@@ -70,6 +82,64 @@ function App() {
             </div>
           </div>
         </article>
+      </section>
+
+      <section className="section">
+        <header className="section__header">
+          <p className="eyebrow">工程化拆分</p>
+          <h2>把 Sass 拆成 tokens / mixins / modules</h2>
+          <p className="muted">仍旧全局 CSS，但靠文件分层、约定的 import 顺序来降低混乱。</p>
+        </header>
+        <div className="token-grid">
+          <div className="token-chip token-chip--brand">
+            <p className="token-chip__name">$color-brand</p>
+            <p className="token-chip__desc">色板集中定义，方便一键换肤。</p>
+          </div>
+          <div className="token-chip token-chip--muted">
+            <p className="token-chip__name">@mixin surface</p>
+            <p className="token-chip__desc">面板统一边框/阴影，所有卡片共用。</p>
+          </div>
+          <div className="token-chip token-chip--danger">
+            <p className="token-chip__name">@mixin deep-nesting-demo</p>
+            <p className="token-chip__desc">嵌套链条一旦输出，即成为全局锁死。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section flow">
+        <header className="section__header">
+          <p className="eyebrow">典型流水线</p>
+          <h2>预处理器时代的“工程化”</h2>
+          <p className="muted">没有模块隔离，只能通过拆文件 + 约定的 mixin 使用顺序降低风险。</p>
+        </header>
+        <div className="flow__steps">
+          <div className="flow__step">
+            <div className="flow__badge">1</div>
+            <div>
+              <h3>定义 tokens</h3>
+              <p className="muted">
+                色板、阴影、radius 写进
+                {' '}
+                <code>_tokens.scss</code>
+                。
+              </p>
+            </div>
+          </div>
+          <div className="flow__step">
+            <div className="flow__badge">2</div>
+            <div>
+              <h3>封装 mixins</h3>
+              <p className="muted">按钮、面板等抽成 mixin，避免重复。</p>
+            </div>
+          </div>
+          <div className="flow__step">
+            <div className="flow__badge">3</div>
+            <div>
+              <h3>再写页面</h3>
+              <p className="muted">按约定 import，祈祷没有全局覆盖冲突。</p>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   )

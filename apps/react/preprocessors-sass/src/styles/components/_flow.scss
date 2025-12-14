@@ -1,0 +1,41 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.flow {
+  @include surface('muted');
+
+  padding: 16px;
+}
+
+.flow__steps {
+  display: grid;
+  gap: 10px;
+}
+
+@media (width >= 860px) {
+  .flow__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.flow__step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  padding: 12px;
+  background: $color-surface-contrast;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.flow__badge {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-weight: 700;
+  color: #0b1224;
+  background: #c4b5fd;
+  border-radius: 10px;
+}

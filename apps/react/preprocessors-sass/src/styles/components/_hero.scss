@@ -1,0 +1,29 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.hero {
+  @include surface('muted');
+
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hero__desc {
+  margin: 4px 0 0;
+  color: $color-muted;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}

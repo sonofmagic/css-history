@@ -1,0 +1,27 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.btn {
+  @include button-variant($color-surface-subtle, #e2e8f0, $color-border, 0 12px 30px rgb(0 0 0 / 18%));
+}
+
+.btn--primary {
+  color: #f8fafc;
+  background: $color-brand;
+  border-color: $color-brand;
+  box-shadow: 0 18px 40px rgb(124 58 237 / 30%);
+}
+
+.btn--subtle {
+  color: #e2e8f0;
+  background: $color-surface-contrast;
+  border-color: $color-border;
+}
+
+.btn--ghost {
+  color: $color-muted;
+  background: transparent;
+  border-color: $color-border;
+  box-shadow: none;
+}

@@ -1,0 +1,27 @@
+/* stylelint-disable selector-class-pattern */
+
+.style-guide {
+  gap: 12px;
+}
+
+.bad-override .card__title {
+  color: var(--color-danger);
+}
+
+/* 故意的全局覆盖，模拟 "覆盖链条难排查" */
+.bad-override .btn {
+  color: var(--color-danger);
+  background: #fee2e2;
+  border-color: var(--color-danger);
+  box-shadow: none;
+}
+
+.bad-override .note {
+  padding-left: 10px;
+  color: var(--color-danger);
+  border-left: 3px solid var(--color-danger);
+}
+
+.style-guide .note {
+  margin-top: 8px;
+}

@@ -1,0 +1,31 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.sass-card {
+  @include surface;
+
+  display: grid;
+  gap: 12px;
+  padding: $padding-card;
+}
+
+.sass-card--muted {
+  background: $color-surface-contrast;
+  border-color: $color-border;
+}
+
+.card-header {
+  display: grid;
+  gap: 6px;
+}
+
+.card-header h2 {
+  font-size: 20px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

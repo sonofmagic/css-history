@@ -1,0 +1,20 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../tokens' as *;
+
+.callout {
+  padding: 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.callout.success {
+  color: #22c55e;
+  background: rgba($color-success, 0.1);
+  border-color: rgba($color-success, 0.5);
+}
+
+.callout.danger {
+  color: #fca5a5;
+  background: rgba($color-danger, 0.08);
+  border-color: rgba($color-danger, 0.5);
+}

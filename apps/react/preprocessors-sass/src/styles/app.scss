@@ -1,47 +1,12 @@
-@use './tokens' as *;
-@use './mixins' as *;
-@use '@css-history/preflight' as preflight;
-
-:root {
-  color: #e2e8f0;
-  background: radial-gradient(circle at 20% 20%, rgb(124 58 237 / 22%), transparent 32%), #0b1224;
-}
-
-body {
-  min-height: 100vh;
-}
-
-.page {
-  display: grid;
-  gap: 24px;
-  max-width: 960px;
-  padding: 42px 20px 60px;
-  margin: 0 auto;
-}
-
-h1 {
-  margin: 0;
-  font-size: 30px;
-}
-
-.hero {
-  @include surface('muted');
-
-  padding: 22px;
-}
-
-.hero-desc {
-  margin: 10px 0 0;
-  color: $color-muted;
-}
-
-.grid {
-  display: grid;
-  gap: 18px;
-}
-
-@media (width >= 880px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
+@use './tokens';
+@use './mixins';
+@use './base';
+@use './layout';
+@use './components/hero';
+@use './components/pills';
+@use './components/buttons';
+@use './components/card';
+@use './components/callout';
+@use './components/flow';
+@use './components/tokens-board';
+@use './components/legacy';

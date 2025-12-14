@@ -1,0 +1,8 @@
+/* stylelint-disable selector-class-pattern, scss/no-global-function-names */
+@use '../mixins' as *;
+@use '../tokens' as *;
+@include deep-nesting-demo;
+
+.legacy-form .field button {
+  justify-self: start;
+}
