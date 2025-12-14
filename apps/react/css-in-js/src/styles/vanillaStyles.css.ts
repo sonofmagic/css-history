@@ -52,3 +52,20 @@ export const badge = style({
   border: '1px solid rgb(236 72 153 / 32%)',
   borderRadius: '12px',
 })
+
+export const metaRow = style({
+  display: 'grid',
+  gap: '6px',
+})
+
+export const muted = style({
+  color: '#475569',
+  margin: 0,
+})
+
+export const footer = style({
+  margin: 0,
+  padding: '8px 0 0',
+  color: '#0f172a',
+  fontWeight: 600,
+})

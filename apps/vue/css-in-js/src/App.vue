@@ -1,131 +1,188 @@
 <script setup lang="ts">
-import { css, cx } from '@emotion/css'
+import { cx } from '@emotion/css'
 import { computed, ref } from 'vue'
+import {
+  codeBox,
+  featureGrid,
+  gridTwo,
+  heroShell,
+  makeButtonClass,
+  makeCardClass,
+  metaRow,
+  metricLabel,
+  metricRow,
+  metricValue,
+  note,
+  pill,
+  pillAccent,
+  pillGhost,
+  ribbon,
+  runtimeNote,
+  sectionHeading,
+  tag,
+  warningBox,
+} from './styles/primitives'
+import { type ThemeKey, palette, themes } from './styles/theme'
 
-const themes = {
-  dark: {
-    surface: 'linear-gradient(150deg, #0f172a, #0b1224 60%, #111827)',
-    border: 'rgba(255, 255, 255, 0.12)',
-    accent: '#7dd3fc',
-    text: '#e5e7eb',
-    shadow: '0 18px 44px rgba(0, 0, 0, 0.38)',
-  },
-  light: {
-    surface: '#f8fafc',
-    border: '#e2e8f0',
-    accent: '#0ea5e9',
-    text: '#0f172a',
-    shadow: '0 20px 44px rgba(14, 165, 233, 0.18)',
-  },
-}
-
-const mode = ref<keyof typeof themes>('dark')
+const mode = ref<ThemeKey>('dark')
 const animatedBorder = ref(true)
+const hydrationSize = ref(62)
 
-const shell = css`
-  display: grid;
-  gap: 16px;
-  padding: 20px;
-  border-radius: 18px;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-`
-
-const pill = css`
-  display: inline-flex;
-  gap: 6px;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`
-
-const runtimeNote = css`
-  font-size: 12px;
-  color: #94a3b8;
-  margin-top: 8px;
-  word-break: break-all;
-`
-
-const cardClass = computed(() => css`
-  ${shell};
-  background: ${themes[mode.value].surface};
-  border: 1px solid ${themes[mode.value].border};
-  color: ${themes[mode.value].text};
-  box-shadow: ${themes[mode.value].shadow};
-`)
-
-const btn = computed(() => css`
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid ${animatedBorder.value ? themes[mode.value].accent : themes[mode.value].border};
-  color: ${mode.value === 'dark' ? '#0b1224' : '#f8fafc'};
-  background: linear-gradient(135deg, ${themes[mode.value].accent}, ${mode.value === 'dark' ? '#0ea5e9' : '#0284c7'});
-  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.4);
-  cursor: pointer;
-  transition: transform 140ms ease, box-shadow 140ms ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 36px rgba(14, 165, 233, 0.44);
-  }
-`)
-
-const warning = css`
-  border: 1px dashed rgba(248, 113, 113, 0.6);
-  background: rgba(248, 113, 113, 0.08);
-  color: #fecdd3;
-`
+const cardClass = computed(() => makeCardClass(mode.value))
+const btn = computed(() => makeButtonClass(mode.value, animatedBorder.value))
 
 const modeLabel = computed(() => (mode.value === 'dark' ? '暗色运行时主题' : '亮色运行时主题'))
-
 const classSize = computed(() => btn.value.length + cardClass.value.length)
+
+const runtimeCosts = computed(() => [
+  { label: 'SSR 注水', value: `${hydrationSize.value}KB`, desc: 'emotion cache + 已生成样式必须附带到 HTML' },
+  { label: '哈希类名', value: 'devtools 依赖 source map', desc: '覆盖链需要 Debug 视图辅助' },
+  { label: 'HMR/缓存', value: '需要 emotion cache 复用', desc: '否则 style 标签会频繁增删' },
+])
+
+const pipeline = [
+  '定义 theme tokens（颜色/阴影） -> props 读取。',
+  '为组件暴露变体 props，拆出 shared hooks 生成 className。',
+  '生产模式使用 babel 插件/提取 Critical CSS，减少注水。',
+]
+
+const dxSignals = [
+  { label: '类型提示', value: 'css prop / styled 具备 TS 提示' },
+  { label: 'Tree Shaking', value: '依赖 babel 插件（@emotion/babel-plugin）' },
+  { label: '缓存策略', value: 'Emotion cache key 需与 SSR 对齐' },
+]
 </script>
 
 <template>
   <main class="page">
-    <header style="display: grid; gap: 8px; margin-bottom: 12px;">
-      <p style=" margin: 0;color: #94a3b8; letter-spacing: 0.08em;">2017 · CSS-in-JS (Emotion/SC)</p>
-      <h1 style="margin: 0; font-size: 30px;">组件边界天然隔离，props 驱动样式</h1>
-      <p style=" margin: 0;color: #cbd5e1;">
-        Emotion 在运行时生成 class 并注入 <code>&lt;style&gt;</code>，主题切换与 props 状态天然绑定，但首屏注水、运行时性能需关注。
-      </p>
-    </header>
-
-    <section :class="cardClass">
-      <div :class="pill" style=" color: #7dd3fc;background: rgb(14 165 233 / 16%); border: 1px solid rgb(125 211 252 / 32%);">
-        <span class="icon">⚡️</span>
-        动态主题
+    <header :class="heroShell">
+      <div :class="metaRow">
+        <span :class="cx(pill, pillAccent)">2017 · CSS-in-JS (Emotion/SC)</span>
+        <span :class="cx(pill, pillGhost)">组件隔离</span>
+        <span :class="cx(pill, pillGhost)">props 驱动样式</span>
       </div>
-      <h2 style="margin: 4px 0 0;">用 props/状态驱动样式</h2>
-      <p style="color: #cbd5e1;">按钮、卡片、阴影都由响应式状态生成，组件边界即作用域。</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+      <h1 style="margin: 0; font-size: 30px;">组件边界天然隔离，主题/状态直连样式</h1>
+      <p :style="{ margin: 0, color: palette.subtle }">
+        Emotion 运行时生成 class 并注入 <code>&lt;style&gt;</code>，主题切换与 props 状态天然绑定；同时要关注 SSR 注水、缓存与 devtools 可读性。
+      </p>
+      <div :class="metaRow">
         <button :class="btn" type="button" @click="mode = mode === 'dark' ? 'light' : 'dark'">
           切换为 {{ mode === 'dark' ? '亮色' : '暗色' }}
         </button>
-        <label style="display: inline-flex; gap: 6px; align-items: center;">
+        <label :class="tag">
           <input v-model="animatedBorder" type="checkbox" />
           props 决定边框/阴影
         </label>
+        <label :class="tag">
+          <input v-model="hydrationSize" min="40" max="120" type="range" />
+          注水体积（KB）
+        </label>
       </div>
-      <p :class="runtimeNote">当前主题：{{ modeLabel }}；生成的 class 长度 ~{{ classSize }} 字符（首屏需注入同等长度的 style）。</p>
-    </section>
+      <p :class="runtimeNote">
+        当前主题：{{ modeLabel }}；生成的 class 长度 ~{{ classSize }} 字符；SSR 注水体积 ~{{ hydrationSize }}KB。
+      </p>
+    </header>
 
-    <section :class="cx(cardClass, warning)">
-      <div :class="pill" style=" color: #fecdd3;background: rgb(248 113 113 / 14%); border: 1px solid rgb(248 113 113 / 40%);">
-        <span class="icon">⚠️</span>
-        运行时成本
+    <div :class="gridTwo">
+      <section :class="cardClass">
+        <div :class="cx(pill, pillAccent)">
+          <span class="icon">⚡️</span>
+          动态主题（Emotion）
+        </div>
+        <div :class="sectionHeading">
+          <h2 style="margin: 0;">用 props/状态驱动样式</h2>
+          <p :style="{ color: palette.subtle, margin: 0 }">按钮、卡片、阴影都由响应式状态生成，组件边界即作用域。</p>
+        </div>
+        <div :class="metaRow">
+          <button :class="btn" type="button" @click="mode = mode === 'dark' ? 'light' : 'dark'">
+            切换为 {{ mode === 'dark' ? '亮色' : '暗色' }}
+          </button>
+          <span :class="tag">className 由 props 拼出</span>
+          <span :class="tag">同组件支持多变体</span>
+        </div>
+        <div :class="note">
+          <strong>工程化拆分：</strong>
+          <ul style=" display: grid; gap: 4px;margin: 6px 0 0 16px; color: #cbd5e1;">
+            <li v-for="item in pipeline" :key="item">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+        <div :class="codeBox">
+          const button = css`padding: 10px; background: theme.accent;` →
+          <span :style="{ color: themes[mode].accent }">className</span>
+          随主题切换重新生成。
+        </div>
+      </section>
+
+      <section :class="cx(cardClass, warningBox)">
+        <div :class="pill">
+          <span class="icon">⚠️</span>
+          运行时成本
+        </div>
+        <h2 style="margin: 4px 0 0;">首屏注水 &amp; 可读性</h2>
+        <div style="display: grid; gap: 8px;">
+          <div v-for="item in runtimeCosts" :key="item.label" :class="metricRow">
+            <div :class="metricLabel">
+              <span>{{ item.label }}</span>
+              <small style="color: #cbd5e1;">{{ item.desc }}</small>
+            </div>
+            <span :class="metricValue">{{ item.value }}</span>
+          </div>
+        </div>
+        <p :class="runtimeNote">类名是哈希，排查覆盖链需要 devtools / 标记辅助。</p>
+      </section>
+
+      <section :class="cardClass">
+        <div :class="ribbon">工程化拆分</div>
+        <h2 style="margin: 6px 0 0;">主题、变体、生产优化</h2>
+        <ul style=" display: grid; gap: 6px;margin: 8px 0 0 16px; color: #cbd5e1;">
+          <li>ThemeProvider / emotion cache 注入，组件直接消费 tokens。</li>
+          <li>变体通过 props + 条件 className，避开 BEM 样式冲突。</li>
+          <li>生产模式开启 @emotion/babel-plugin，移除 dev 代码并抽离关键 CSS。</li>
+        </ul>
+        <p :class="runtimeNote">比 BEM 更隔离，但要为 SSR 注水与缓存策略设计好基建。</p>
+      </section>
+
+      <section :class="cardClass">
+        <div :class="pill">DX 快照</div>
+        <h2 style="margin: 4px 0 0;">类型/Tree Shaking/缓存</h2>
+        <div style="display: grid; gap: 6px; margin-top: 6px;">
+          <div v-for="signal in dxSignals" :key="signal.label" :class="metricRow">
+            <div :class="metricLabel">
+              <span>{{ signal.label }}</span>
+              <small style="color: #cbd5e1;">{{ signal.value }}</small>
+            </div>
+            <span :class="metricValue">OK</span>
+          </div>
+        </div>
+        <p :class="runtimeNote">Dev 提示与生产优化通常由 Babel/Vite 插件和 cache 配置兜底。</p>
+      </section>
+    </div>
+
+    <section :class="cardClass">
+      <div :class="sectionHeading">
+        <h2 style="margin: 0;">更多 CSS-in-JS 侧重点</h2>
+        <p :style="{ margin: 0, color: palette.subtle }">运行时/编译期的取舍不同：有的零运行时，有的强调原子化。</p>
       </div>
-      <h2 style="margin: 4px 0 0;">首屏注水 &amp; 可读性</h2>
-      <ul style=" display: grid; gap: 4px; margin: 6px 0 0 18px;color: #fecdd3;">
-        <li>SSR 要把生成的样式注入 HTML，60KB 很常见。</li>
-        <li>类名是哈希，排查覆盖链需要 devtools/标记。</li>
-        <li>热更新有时需要 emotion cache，性能与缓存要监控。</li>
-      </ul>
+      <div :class="featureGrid">
+        <div :class="note">
+          <strong>styled-components：</strong>
+          props → 样式分支，ThemeProvider 注入主题，SSR 需收集 style 标签。
+        </div>
+        <div :class="note">
+          <strong>styled-jsx：</strong>
+          Next.js 内置，编译成 scoped class；轻量，但仍有注水。
+        </div>
+        <div :class="note">
+          <strong>stylex：</strong>
+          编译期映射原子类，运行时极轻；语法接近 inline style。
+        </div>
+        <div :class="note">
+          <strong>vanilla-extract：</strong>
+          零运行时，构建期产出 CSS，具备类型提示，适合大规模 Design System。
+        </div>
+      </div>
     </section>
   </main>
 </template>

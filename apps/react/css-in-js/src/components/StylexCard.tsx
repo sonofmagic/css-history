@@ -1,11 +1,12 @@
 import * as stylex from '@stylexjs/stylex'
+import { palette } from '../styles/theme'
 
 const styles = stylex.create({
   card: {
     display: 'grid',
     gap: 10,
     padding: 16,
-    color: '#0f172a',
+    color: palette.ink,
     backgroundColor: '#f8fafc',
     borderRadius: 14,
     border: '1px solid #e2e8f0',
@@ -59,6 +60,16 @@ const styles = stylex.create({
     gap: 8,
     flexWrap: 'wrap',
   },
+  meta: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 6,
+    padding: '4px 8px',
+    color: '#475569',
+    backgroundColor: '#f1f5f9',
+    borderRadius: 10,
+    border: '1px dashed #cbd5e1',
+  },
 })
 
 export function StylexCard() {
@@ -77,6 +88,7 @@ export function StylexCard() {
           Ghost
         </button>
       </div>
+      <span {...stylex.props(styles.meta)}>编译期映射 + 运行时极轻</span>
     </section>
   )
 }

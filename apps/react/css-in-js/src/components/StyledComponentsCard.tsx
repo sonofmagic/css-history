@@ -1,11 +1,12 @@
 import styled from 'styled-components'
+import { palette } from '../styles/theme'
 
 const Card = styled.section`
   display: grid;
   gap: 10px;
   padding: 16px;
-  color: #0f172a;
-  background: #fff;
+  color: ${palette.ink};
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   box-shadow: 0 12px 30px rgb(15 23 42 / 10%);
@@ -55,6 +56,24 @@ const Button = styled.button<ButtonVariantProps>`
   }
 `
 
+const MetaRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`
+
+const Meta = styled.span`
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #475569;
+  background: #f1f5f9;
+  border-radius: 10px;
+  border: 1px dashed #cbd5e1;
+`
+
 export function StyledComponentsCard() {
   return (
     <Card>
@@ -63,6 +82,11 @@ export function StyledComponentsCard() {
       <p style={{ margin: 0, color: '#475569' }}>
         通过模板字符串定义 styled 组件，props 直接参与样式分支；主题/变体放在同一组件内，易于封装 Design System。
       </p>
+      <MetaRow>
+        <Meta>ThemeProvider 注入 tokens</Meta>
+        <Meta>props → 变体 class</Meta>
+        <Meta>SSR 需收集 style 标签</Meta>
+      </MetaRow>
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
         <Button type="button">Solid CTA</Button>
         <Button $variant="ghost" type="button">
